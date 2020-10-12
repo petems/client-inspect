@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	spy "github.com/j0hnsmith/connspy/net"
+	spy "github.com/petems/client-inspect/net"
 )
 
 // NewClient returns a http.Client that will output all http data to stderr.

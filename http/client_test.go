@@ -8,7 +8,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/j0hnsmith/connspy/http"
+	"github.com/petems/client-inspect/http"
 )
 
 func ExampleNewClient() {

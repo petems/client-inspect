@@ -1,1 +1,1 @@
-module github.com/j0hnsmith/connspy
+module github.com/petems/client-inspect
