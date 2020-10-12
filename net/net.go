@@ -1,4 +1,4 @@
-// net provides tools for eavesdropping on a net.Conn.
+// Package net provides tools for eavesdropping on a net.Conn.
 package net
 
 import (

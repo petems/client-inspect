@@ -1,4 +1,5 @@
 # client-inspect
+[![GoDoc](https://godoc.org/github.com/petems/client-inspect?status.svg)](https://godoc.org/github.com/petems/client-inspect) [![Go Report Card](https://goreportcard.com/badge/github.com/petems/client-inspect)](https://goreportcard.com/report/github.com/petems/client-inspect)
 
 Allows inspection of a `http.Client` connections
 
@@ -83,10 +84,6 @@ func main() {
 ```
 
 ![image](https://user-images.githubusercontent.com/1064715/95797941-a5e31200-0ce8-11eb-95ab-c0adaa3f330d.png)
-
-## Docs
-
-[![GoDoc](https://godoc.org/github.com/j0hnsmith/connspy?status.svg)](https://godoc.org/github.com/j0hnsmith/connspy) 
 
 ## Background info
 

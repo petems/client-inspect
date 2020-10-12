@@ -1,7 +1,8 @@
-// http provides a http client that outputs raw http to stdout.
+// Package http provides a http client that outputs raw http to stdout.
 package http
 
 import (
+	"context"
 	"crypto/tls"
 	"errors"
 	"fmt"
@@ -49,23 +50,23 @@ func clientToWriter(dialer *net.Dialer, transport *http.Transport, writer io.Wri
 		}
 	}
 
-	dial := func(network, address string) (net.Conn, error) {
-		c, err := dialer.Dial(network, address)
+	dialContext := func(ctx context.Context, network, address string) (net.Conn, error) {
+		c, err := dialer.DialContext(ctx, network, address)
 		if err != nil {
 			return nil, err
 		}
 
-		fmt.Fprint(writer, fmt.Sprintf("\n%s\n\n", strings.Repeat("-", 80)))
+		fmt.Fprintf(writer, "\n%s\n\n", strings.Repeat("-", 80))
 		return spy.WrapConnection(c, writer), nil
 	}
 
-	dialTLS := func(network, address string) (net.Conn, error) {
-		plainConn, err := dialer.Dial(network, address)
+	dialTLSContext := func(ctx context.Context, network, address string) (net.Conn, error) {
+		plainConn, err := dialer.DialContext(ctx, network, address)
 		if err != nil {
 			return nil, err
 		}
 
-		//Initiate TLS and check remote host name against certificate.
+		// Initiate TLS and check remote host name against certificate.
 		cfg := new(tls.Config)
 
 		// add https:// to satisfy url.Parse(), we won't use it
@@ -99,12 +100,12 @@ func clientToWriter(dialer *net.Dialer, transport *http.Transport, writer io.Wri
 			}
 		}
 
-		fmt.Fprint(writer, fmt.Sprintf("\n%s\n\n", strings.Repeat("-", 80)))
+		fmt.Fprintf(writer, "\n%s\n\n", strings.Repeat("-", 80))
 		return spy.WrapConnection(tlsConn, writer), nil
 	}
 
-	transport.Dial = dial
-	transport.DialTLS = dialTLS
+	transport.DialContext = dialContext
+	transport.DialTLSContext = dialTLSContext
 
 	timeoutClient := &http.Client{
 		Transport: transport,
