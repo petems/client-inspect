@@ -1,5 +1,5 @@
 # client-inspect
-[![GoDoc](https://godoc.org/github.com/petems/client-inspect?status.svg)](https://godoc.org/github.com/petems/client-inspect) [![Go Report Card](https://goreportcard.com/badge/github.com/petems/client-inspect)](https://goreportcard.com/report/github.com/petems/client-inspect)
+[![GoDoc](https://godoc.org/github.com/petems/client-inspect/http?status.svg)](https://godoc.org/github.com/petems/client-inspect/http) [![PkgGoDev](https://pkg.go.dev/badge/petems/client-inspect/http)](https://pkg.go.dev/petems/client-inspect/http) [![Go Report Card](https://goreportcard.com/badge/github.com/petems/client-inspect)](https://goreportcard.com/report/github.com/petems/client-inspect)
 
 Allows inspection of a `http.Client` connections
 
