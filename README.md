@@ -85,6 +85,54 @@ func main() {
 
 ![image](https://user-images.githubusercontent.com/1064715/95797941-a5e31200-0ce8-11eb-95ab-c0adaa3f330d.png)
 
+For more complex redaction purposes, I've been having a lot of luck with creating an io.Writer with logrus, then using [redactrus](https://github.com/whuang8/redactrus) to redact certain parts of the logs. Plus you can do cool formatting!
+
+```go
+package main
+
+import (
+	"io/ioutil"
+	"time"
+
+	"github.com/petems/client-inspect/http"
+	"github.com/sirupsen/logrus"
+	"github.com/whuang8/redactrus"
+	prefixed "github.com/x-cray/logrus-prefixed-formatter"
+)
+
+func main() {
+
+	rh := &redactrus.Hook{
+		AcceptedLevels: logrus.AllLevels,
+		RedactionList:  []string{"^(Host: ).+$"},
+	}
+
+	log := logrus.New()
+
+	textFormatter := new(prefixed.TextFormatter)
+	textFormatter.FullTimestamp = true
+	textFormatter.TimestampFormat = time.RFC822
+
+	log.SetFormatter(textFormatter)
+
+	log.AddHook(rh)
+
+	client := http.NewClientWriter(nil, nil, log.Writer())
+
+	resp, _ := client.Get("http://example.com/")
+	// ensure all of the body is read
+	ioutil.ReadAll(resp.Body)
+	resp.Body.Close()
+
+	resp, _ = client.Get("https://example.com/")
+	ioutil.ReadAll(resp.Body)
+	resp.Body.Close()
+
+}
+```
+
+![image](https://user-images.githubusercontent.com/1064715/95857163-1c1c5e80-0d53-11eb-9748-a5232a0be94a.png)
+
 ## Background info
 
 [https://medium.com/@j0hnsmith/eavesdrop-on-a-golang-http-client-c4dc49af9d5e](https://medium.com/@j0hnsmith/eavesdrop-on-a-golang-http-client-c4dc49af9d5e)
