@@ -3,7 +3,7 @@
 
 Allows inspection of a `http.Client` connections
 
-Heavily based on github.com/j0hnsmith/connspy
+Heavily based on https://github.com/j0hnsmith/connspy
 
 ### `http` package 
 
